@@ -1,5 +1,5 @@
 <template>
-  <div id="user-form">
+  <div id="user-form" class="user-form--full">
     <div class="form">
       <div>
         <label>Name</label>
@@ -74,8 +74,3 @@
     }
   }
 </script>
-
-<style scoped>
-
-  
-</style>

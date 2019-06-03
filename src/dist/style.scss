@@ -7,7 +7,7 @@
     max-width: 1000px;
     box-shadow: 0px 0px 16px -3px #dedede;
     margin: auto;
-    height: 600px;
+    max-height: 600px;
     margin-top: 100px;
 
     & >div {
@@ -19,7 +19,17 @@
     .users__info {
         display: none;
     }
-    .wrapper > div {
-        width: auto;
+    .wrapper {
+        max-width: 600px;
+        & > div {
+            min-width: 100px;
+            width: auto;
+        }
+
+        & .user-form--full{
+            width:100%;
+        }
     }
+    
+    
 }
