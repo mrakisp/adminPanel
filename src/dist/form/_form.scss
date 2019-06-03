@@ -1,5 +1,5 @@
 .form {
-    padding: 35px;
+    padding: 15px 35px;
     
     & > div {
         display: flex;
@@ -8,7 +8,55 @@
     }
 
     & label {
+        color: grey;
         padding-bottom: 10px;
+        padding-top: 20px;
     }
 
+    & input {
+        height: 30px;
+        border: 1px solid #ececec;
+        padding: 0 10px;
+        color: grey;
+        font-weight: 500;
+        font-family: 'Open Sans', sans-serif;
+        font-size: 15px;
+    }
+
+    &__actions{
+        margin-top: 20px;
+    }
+
+    &__save{
+        background-color: #1b68b3;
+        border: 0;
+        color: #fff;
+        padding: 8px;
+        border-radius: 3px;
+        max-width: 50px;
+        align-self: flex-end;
+        cursor:pointer;
+
+        &:disabled {
+            background-color: rgba(27, 104, 179, 0.70);
+            cursor: not-allowed;
+        }
+    }
+
+    & &__actions {
+        margin-top: 20px;
+        flex-direction: row-reverse;
+    }
+
+    &__cancel{
+        border: 0;
+        background-color: #f7f7f7;
+        padding: 8px;
+        color: grey;
+        font-weight: 600;
+        align-self: flex-end;
+        cursor:pointer;
+        margin-right: 5px;
+        border-radius: 3px;
+    }
 }

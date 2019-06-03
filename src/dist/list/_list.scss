@@ -1,21 +1,45 @@
+$white : #fff;
+$grey: grey;
+
 .users{
     overflow-y: scroll;
+
     &__image img {
         border-radius: 100%;
-        width: 70px;
+        width: 60px;
     }
     &__item {
         display: flex;
-        padding:6px;
+        padding: 5px 5px 5px 15px;
     }
     &__item:hover {
-        background:blue;
+        background:#e8e8e8;
         cursor:pointer;
     }
     &__info {
         text-align: left;
         align-self: center;
         padding-left: 25px;
+    }
+    &__email {
+        color: $grey;
+    }
+    &__name {
+        font-weight: 600;
+    }
+    &__item--selected, &__item--selected:hover{
+        background-color:#1b68b3; 
+    }
+    &__item--selected {
+        .users__name {
+            color: $white;
+        }
+        .users__email {
+            color: $white;
+            opacity: 0.5;
+        }
+
+        
     }
 }
   
