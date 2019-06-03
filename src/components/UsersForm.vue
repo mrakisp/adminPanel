@@ -3,23 +3,23 @@
     <div class="form">
       <div>
         <label>Name</label>
-         <input type="text" ref="name" v-model="initUser.name" :disabled="!isEditingAlive">
+         <input type="text" placeholder="Enter a name" ref="name" v-model="initUser.name" :disabled="!isEditingAlive">
       </div>
       <div>
         <label>Email</label>
-        <input type="text" ref="email" v-model="initUser.email" :disabled="!isEditingAlive">
+        <input type="text" placeholder="Enter an email" ref="email" v-model="initUser.email" :disabled="!isEditingAlive">
       </div>
       <div>
         <label>Phone</label>
-        <input type="text" ref="phone" v-model="initUser.phone" :disabled="!isEditingAlive">
+        <input type="text" placeholder="Enter a phone" ref="phone" v-model="initUser.phone" :disabled="!isEditingAlive">
       </div>
       <div>
         <label>Address</label>
-        <input type="text" ref="address" v-model="initUser.address" :disabled="!isEditingAlive">
+        <input type="text" placeholder="Enter an address" ref="address" v-model="initUser.address" :disabled="!isEditingAlive">
       </div>
       <div>
         <label>Company</label>
-        <input type="text" ref="company" v-model="initUser.company" :disabled="!isEditingAlive">
+        <input type="text" placeholder="Enter a company" ref="company" v-model="initUser.company" :disabled="!isEditingAlive">
       </div>
       <div class="form__actions">
         <button class="form__save" @click="save" :disabled="!isEditingAlive" >Save</button>
