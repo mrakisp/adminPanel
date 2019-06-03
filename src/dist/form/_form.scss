@@ -1,0 +1,14 @@
+.form {
+    padding: 35px;
+    
+    & > div {
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+    }
+
+    & label {
+        padding-bottom: 10px;
+    }
+
+}

@@ -76,16 +76,6 @@
 </script>
 
 <style scoped>
-.form > div {
-    display: flex;
-    flex-direction: column;
-    text-align: left;
-}
-.form label {
-    padding-bottom: 10px;
-}
-.form {
-    margin-bottom: 2rem;
-  }
+
   
 </style>

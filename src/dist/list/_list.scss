@@ -1,0 +1,22 @@
+.users{
+    overflow-y: scroll;
+    &__image img {
+        border-radius: 100%;
+        width: 70px;
+    }
+    &__item {
+        display: flex;
+        padding:6px;
+    }
+    &__item:hover {
+        background: red;
+        cursor:pointer;
+    }
+    &__info {
+        text-align: left;
+        align-self: center;
+        padding-left: 25px;
+    }
+}
+  
+ 
