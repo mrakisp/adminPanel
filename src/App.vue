@@ -23,7 +23,6 @@ export default {
   data() {
     return {
       users: UserData,
-      //isEditing: false,
       user: {
         type: Object
       }
