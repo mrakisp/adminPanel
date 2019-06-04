@@ -7,11 +7,21 @@
       </div>
       <div>
         <label>Email</label>
-        <input type="email" :class="['alert', isEmailValid()]" placeholder="Enter an email" v-model="initUser.email" :disabled="!isEditingAlive">
+        <input type="email" :class="['alert', submited && isEmailValid()]" placeholder="Enter an email" v-model="initUser.email" :disabled="!isEditingAlive">
+        <transition name="slide-fade">
+          <div v-if="submited && isEmailValid()" :class="['alert', 'alert--wrong']">
+                Please enter a valid email
+          </div>
+        </transition>
       </div>
       <div>
         <label>Phone</label>
-        <input type="text" placeholder="Enter a phone" v-model="initUser.phone" :disabled="!isEditingAlive">
+        <input type="text" :class="['alert', submited && isPhoneValid()]" placeholder="Enter a phone" v-model="initUser.phone" :disabled="!isEditingAlive">
+        <transition name="slide-fade">
+          <div v-if="submited && isPhoneValid()" :class="['alert', 'alert--wrong']">
+                Please enter a valid phone
+          </div>
+        </transition>
       </div>
       <div>
         <label>Address</label>
@@ -25,15 +35,19 @@
         <button class="form__save" @click="save" :disabled="!isEditingAlive" >Save</button>
         <button class="form__cancel" v-if="isEditingAlive" @click="cancel">Cancel</button>
       </div>  
-      <div v-if="submited" :class="['alert', alertType]">
-            {{message}}
-      </div>
+      <transition name="slide-fade">
+        <div v-if="submited && (isPhoneValid() || isEmailValid())" :class="['alert', 'alert--danger']">
+              {{message}}
+        </div>
+        <div v-if="submited && !isEditingAlive && (!isPhoneValid() || !isEmailValid())" :class="['alert', 'alert--success']">
+              {{message}}
+        </div>
+      </transition>
     </div>
   </div>
 </template>
 
 <script>
-
   export default {
     name: 'user-form',
     props: ['user', 'isEditing'],
@@ -48,11 +62,11 @@
           id: null,
           photo: null
         },
-        reg: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/,
+        regPhone: /^(\(?\+?[0-9]*\)?)?[0-9_\- \(\)]*$/,
+        regEmail: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/,
         submited: false,
         isEditingAlive: false,
-        message: '',
-        alertType: ''
+        message: ''
       }
     },
     created() {
@@ -66,27 +80,34 @@
     },
     methods: {
       isEmailValid () {
-        return (this.initUser.email == "") ? "" : (this.reg.test(this.initUser.email)) ? '' : 'has-error';
+        if (this.initUser.email.length > 0 && !this.regEmail.test(this.initUser.email) ){
+          return 'has-error';
+        }
+      },
+      isPhoneValid () {
+        if (this.initUser.phone.length > 0 && !this.regPhone.test(this.initUser.phone) ){
+          return 'has-error';
+        }
       },
       save() {
           this.submited = true;
-          if(this.isEmailValid() === 'has-error'){
-            this.alertType = 'alert--danger';
-            this.message = 'Please check the fields';
+          //check if email is typed correctly
+          if(this.isEmailValid() === 'has-error' || this.isPhoneValid() === 'has-error'){
+            this.message = 'Please correct the form errors';
             return
-          }
-          else{
+          }else{
+            //Update user with saved data
             Object.assign(this.user, this.initUser);
             this.$emit('update:user', this.user.id , this.user);
             this.$root.$emit('send-saved');
             this.isEditingAlive = false;
-            this.alertType = 'alert--success';
             this.message = 'Succesfully Saved';
           }
       },
       cancel() { 
-        Object.assign(this.initUser, this.user);
-        this.isEmailValid()
+          //Set temp user to previous saved data
+          Object.assign(this.initUser, this.user);
+          this.submited= false;
       }
     }
   }
