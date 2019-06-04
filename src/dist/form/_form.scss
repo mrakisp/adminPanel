@@ -1,3 +1,4 @@
+
 .form {
     padding: 15px 35px;
     
@@ -8,7 +9,7 @@
     }
 
     & label {
-        color: grey;
+        color: $grey;
         padding-bottom: 10px;
         padding-top: 20px;
     }
@@ -17,7 +18,7 @@
         height: 30px;
         border: 1px solid #ececec;
         padding: 0 10px;
-        color: grey;
+        color: $grey;
         font-weight: 500;
         font-family: 'Open Sans', sans-serif;
         font-size: 15px;
@@ -30,7 +31,7 @@
     &__save{
         background-color: #1b68b3;
         border: 0;
-        color: #fff;
+        color: $white;
         padding: 8px;
         border-radius: 3px;
         max-width: 50px;
@@ -52,7 +53,7 @@
         border: 0;
         background-color: #f7f7f7;
         padding: 8px;
-        color: grey;
+        color:$grey;
         font-weight: 600;
         align-self: flex-end;
         cursor:pointer;

@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600&display=swap');
+@import 'base/vars';
 @import 'form/form';
+@import 'form/alerts';
 @import 'list/list';
 
 body{
@@ -13,7 +15,7 @@ body{
     margin: auto;
     max-height: 600px;
     margin-top: 100px;
-    background-color: #fff;
+    background-color: $white;
 
     & >div {
         width: 50%;

@@ -3,28 +3,31 @@
     <div class="form">
       <div>
         <label>Name</label>
-         <input type="text" placeholder="Enter a name" ref="name" v-model="initUser.name" :disabled="!isEditingAlive">
+         <input type="text" placeholder="Enter a name" v-model="initUser.name" :disabled="!isEditingAlive">
       </div>
       <div>
         <label>Email</label>
-        <input type="text" placeholder="Enter an email" ref="email" v-model="initUser.email" :disabled="!isEditingAlive">
+        <input type="email" :class="['alert', isEmailValid()]" placeholder="Enter an email" v-model="initUser.email" :disabled="!isEditingAlive">
       </div>
       <div>
         <label>Phone</label>
-        <input type="text" placeholder="Enter a phone" ref="phone" v-model="initUser.phone" :disabled="!isEditingAlive">
+        <input type="text" placeholder="Enter a phone" v-model="initUser.phone" :disabled="!isEditingAlive">
       </div>
       <div>
         <label>Address</label>
-        <input type="text" placeholder="Enter an address" ref="address" v-model="initUser.address" :disabled="!isEditingAlive">
+        <input type="text" placeholder="Enter an address" v-model="initUser.address" :disabled="!isEditingAlive">
       </div>
       <div>
         <label>Company</label>
-        <input type="text" placeholder="Enter a company" ref="company" v-model="initUser.company" :disabled="!isEditingAlive">
+        <input type="text" placeholder="Enter a company" v-model="initUser.company" :disabled="!isEditingAlive">
       </div>
       <div class="form__actions">
         <button class="form__save" @click="save" :disabled="!isEditingAlive" >Save</button>
         <button class="form__cancel" v-if="isEditingAlive" @click="cancel">Cancel</button>
       </div>  
+      <div v-if="submited" :class="['alert', alertType]">
+            {{message}}
+      </div>
     </div>
   </div>
 </template>
@@ -45,30 +48,45 @@
           id: null,
           photo: null
         },
+        reg: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/,
+        submited: false,
         isEditingAlive: false,
+        message: '',
+        alertType: ''
       }
     },
     created() {
       this.$root.$on('send-data', (data) => {
         this.isEditingAlive = true
+        this.submited = false
       });
       this.$root.$on('send-user', (data) => {
         Object.assign(this.initUser, data);
       });
     },
     methods: {
+      isEmailValid () {
+        return (this.initUser.email == "") ? "" : (this.reg.test(this.initUser.email)) ? '' : 'has-error';
+      },
       save() {
-        Object.assign(this.user, this.initUser);
-        this.$emit('update:user', this.user.id , this.user);
-        this.$root.$emit('send-saved');
-        this.isEditingAlive = false;
+          this.submited = true;
+          if(this.isEmailValid() === 'has-error'){
+            this.alertType = 'alert--danger';
+            this.message = 'Please check the fields';
+            return
+          }
+          else{
+            Object.assign(this.user, this.initUser);
+            this.$emit('update:user', this.user.id , this.user);
+            this.$root.$emit('send-saved');
+            this.isEditingAlive = false;
+            this.alertType = 'alert--success';
+            this.message = 'Succesfully Saved';
+          }
       },
       cancel() { 
-        this.$refs['name'].value = this.user.name ;
-        this.$refs['email'].value = this.user.email;
-        this.$refs['phone'].value = this.user.phone;
-        this.$refs['address'].value = this.user.address;
-        this.$refs['company'].value = this.user.company;
+        Object.assign(this.initUser, this.user);
+        this.isEmailValid()
       }
     }
   }

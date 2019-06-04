@@ -1,0 +1,23 @@
+.alert{
+    &--success {
+        text-align: center;
+        background: $green;
+        color: $white;
+        max-width: 141px;
+        padding: 5px;
+        margin-left: auto;
+        margin-top: 10px;
+    }
+    &--danger{
+        text-align: center;
+        background: $red;
+        color: $white;
+        max-width: 180px;
+        padding: 5px;
+        margin-left: auto;
+        margin-top: 10px;
+    }
+    &.has-error {
+        border-color: $red;
+    }
+}
