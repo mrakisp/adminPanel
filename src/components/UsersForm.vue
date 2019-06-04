@@ -3,33 +3,33 @@
     <div class="form">
       <div>
         <label>Name</label>
-         <input type="text" placeholder="Enter a name" v-model="initUser.name" :disabled="!isEditingAlive">
+         <input type="text" placeholder="Enter a name" v-model="initUser.name">
       </div>
       <div>
         <label>Email</label>
-        <input type="email" :class="['alert', submited && isEmailValid()]" placeholder="Enter an email" v-model="initUser.email" :disabled="!isEditingAlive">
-        <transition name="slide-fade">
-          <div v-if="submited && isEmailValid()" :class="['alert', 'alert--wrong']">
-                Please enter a valid email
-          </div>
-        </transition>
+        <input type="email" :class="['alert', submited && isEmailValid()]" placeholder="Enter an email" v-model="initUser.email">
+          <transition name="slide-fade">
+            <div v-if="submited && isEmailValid()" :class="['alert', 'alert--wrong']">
+                  Please enter a valid email
+            </div>
+          </transition>
       </div>
       <div>
         <label>Phone</label>
-        <input type="text" :class="['alert', submited && isPhoneValid()]" placeholder="Enter a phone" v-model="initUser.phone" :disabled="!isEditingAlive">
-        <transition name="slide-fade">
-          <div v-if="submited && isPhoneValid()" :class="['alert', 'alert--wrong']">
-                Please enter a valid phone
-          </div>
-        </transition>
+        <input type="text" :class="['alert', submited && isPhoneValid()]" placeholder="Enter a phone" v-model="initUser.phone">
+          <transition name="slide-fade">
+            <div v-if="isPhoneValid()" :class="['alert', 'alert--wrong']">
+                  Please enter a valid phone
+            </div>
+          </transition>
       </div>
       <div>
         <label>Address</label>
-        <input type="text" placeholder="Enter an address" v-model="initUser.address" :disabled="!isEditingAlive">
+        <input type="text" placeholder="Enter an address" v-model="initUser.address" >
       </div>
       <div>
         <label>Company</label>
-        <input type="text" placeholder="Enter a company" v-model="initUser.company" :disabled="!isEditingAlive">
+        <input type="text" placeholder="Enter a company" v-model="initUser.company" >
       </div>
       <div class="form__actions">
         <button class="form__save" @click="save" :disabled="!isEditingAlive" >Save</button>
@@ -39,10 +39,13 @@
         <div v-if="submited && (isPhoneValid() || isEmailValid())" :class="['alert', 'alert--danger']">
               {{message}}
         </div>
+      </transition>
+      <transition name="slide-fade">
         <div v-if="submited && !isEditingAlive && (!isPhoneValid() || !isEmailValid())" :class="['alert', 'alert--success']">
               {{message}}
         </div>
       </transition>
+     
     </div>
   </div>
 </template>
@@ -69,6 +72,43 @@
         message: ''
       }
     },
+    watch:{
+      'initUser.name': function(newVal){
+          if(newVal!==this.user.name){
+               this.isEditingAlive = true
+          }else{
+            this.isEditingAlive = false
+          }
+      },
+      'initUser.email': function(newVal){
+          if(newVal!==this.user.email){
+               this.submited= false;
+               this.isEditingAlive = true
+          }else{
+            this.isEditingAlive = false
+          }
+      },
+      'initUser.phone': function(newVal){
+          if(newVal!==this.user.phone){
+               this.isEditingAlive = true
+          }else{
+            this.isEditingAlive = false
+          }
+      },
+      'initUser.address': function(newVal){
+          if(newVal!==this.user.address){
+               this.isEditingAlive = true
+          }else{
+            this.isEditingAlive = false
+          }
+      },'initUser.company': function(newVal){
+          if(newVal!==this.user.company){
+               this.isEditingAlive = true
+          }else{
+            this.isEditingAlive = false
+          }
+      }
+    },
     created() {
       this.$root.$on('send-data', (data) => {
         this.isEditingAlive = true
@@ -80,12 +120,12 @@
     },
     methods: {
       isEmailValid () {
-        if (this.initUser.email.length > 0 && !this.regEmail.test(this.initUser.email) ){
+        if (this.initUser.email && this.initUser.email.length > 0 && !this.regEmail.test(this.initUser.email) ){
           return 'has-error';
         }
       },
       isPhoneValid () {
-        if (this.initUser.phone.length > 0 && !this.regPhone.test(this.initUser.phone) ){
+        if (this.initUser.phone && this.initUser.phone.length > 0 && !this.regPhone.test(this.initUser.phone) ){
           return 'has-error';
         }
       },
