@@ -3,7 +3,9 @@
     <div class="users__item" v-for="user in users" 
                              :key="user.id" :class="{ 'users__item--selected' : active_el == user.id }" 
                               @click="$emit('edit:user', user), $root.$emit('send-user', user) , activate(user.id)">
-      <div class="users__image"><img v-bind:src="user.photo"/></div>
+      <div class="users__image">
+        <img v-bind:src="user.photo"/>
+      </div>
       <div class="users__info">
         <div class="users__name" >{{ user.name }}</div>
         <div class="users__email">{{ user.email }}</div>
