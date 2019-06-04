@@ -18,7 +18,7 @@
         <label>Phone</label>
         <input type="text" :class="['alert', submited && isPhoneValid()]" placeholder="Enter a phone" v-model="initUser.phone">
           <transition name="slide-fade">
-            <div v-if="isPhoneValid()" :class="['alert', 'alert--wrong']">
+            <div v-if="submited && isPhoneValid()" :class="['alert', 'alert--wrong']">
                   Please enter a valid phone
             </div>
           </transition>
@@ -36,12 +36,12 @@
         <button class="form__cancel" v-if="isEditingAlive" @click="cancel">Cancel</button>
       </div>  
       <transition name="slide-fade">
-        <div v-if="submited && (isPhoneValid() || isEmailValid())" :class="['alert', 'alert--danger']">
+        <div v-if="submitedWithErrors && (isPhoneValid() || isEmailValid())" :class="['alert', 'alert--danger']">
               {{message}}
         </div>
       </transition>
       <transition name="slide-fade">
-        <div v-if="submited && !isEditingAlive && (!isPhoneValid() || !isEmailValid())" :class="['alert', 'alert--success']">
+        <div v-if="submited && !submitedWithErrors && (!isPhoneValid() && !isEmailValid())" :class="['alert', 'alert--success']">
               {{message}}
         </div>
       </transition>
@@ -68,6 +68,7 @@
         regPhone: /^(\(?\+?[0-9]*\)?)?[0-9_\- \(\)]*$/,
         regEmail: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/,
         submited: false,
+        submitedWithErrors: false,
         isEditingAlive: false,
         message: ''
       }
@@ -82,7 +83,6 @@
       },
       'initUser.email': function(newVal){
           if(newVal!==this.user.email){
-               this.submited= false;
                this.isEditingAlive = true
           }else{
             this.isEditingAlive = false
@@ -134,9 +134,11 @@
           //check if email is typed correctly
           if(this.isEmailValid() === 'has-error' || this.isPhoneValid() === 'has-error'){
             this.message = 'Please correct the form errors';
+            this.submitedWithErrors = true
             return
           }else{
             //Update user with saved data
+            this.submitedWithErrors = false
             Object.assign(this.user, this.initUser);
             this.$emit('update:user', this.user.id , this.user);
             this.$root.$emit('send-saved');
@@ -148,6 +150,7 @@
           //Set temp user to previous saved data
           Object.assign(this.initUser, this.user);
           this.submited= false;
+          this.submitedWithErrors = false
       }
     }
   }
