@@ -3,6 +3,8 @@
 ## Project setup
 ```
 npm install
+npm install @vue/cli
+npm install sass-loader node-sass
 ```
 
 ### Compiles and hot-reloads for development
