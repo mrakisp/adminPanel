@@ -1,4 +1,4 @@
-# vue-app , scss
+# vue-app
 
 ## Project setup
 ```
