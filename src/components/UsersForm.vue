@@ -111,7 +111,6 @@
     },
     created() {
       this.$root.$on('send-data', (data) => {
-        this.isEditingAlive = true
         this.submited = false
       });
       this.$root.$on('send-user', (data) => {
