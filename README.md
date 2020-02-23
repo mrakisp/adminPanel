@@ -1,4 +1,4 @@
-# vue-app
+# vue-app - Edit users dashboard
 
 ## Project setup
 ```
