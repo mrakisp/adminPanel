@@ -1,5 +1,8 @@
 # vue-app - Edit users dashboard
 
+# Preview - 
+![](app.gif)
+
 ## Project setup
 ```
 npm install
